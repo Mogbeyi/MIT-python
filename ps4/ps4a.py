@@ -46,6 +46,8 @@ if __name__ == '__main__':
 #    # Put three example test cases here (for your sanity, limit your inputs
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
+    expected_result = ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+    result = get_permutations('abc')
 
-    assert len(get_permutations("naruto")) == 720
-
+    for word in result:
+        assert word in expected_result
