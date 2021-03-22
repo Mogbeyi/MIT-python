@@ -22,8 +22,19 @@ def get_permutations(sequence):
     Note: depending on your implementation, you may return the permutations in
     a different order than what is listed here.
     '''
+    if len(sequence) == 0:
+        return [sequence] 
 
-    pass #delete this line and replace with your code here
+    permutations = []
+    first_element = sequence[0]
+    rest_element = sequence[1:]
+    permutations_without_first = get_permutations(rest_element)
+
+    for chars in permutations_without_first:
+        for i in range(len(chars) + 1):
+            permutations.append(chars[:i] + first_element + chars[i:])
+
+    return permutations
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -36,5 +47,5 @@ if __name__ == '__main__':
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
 
-    pass #delete this line and replace with your code here
+    assert len(get_permutations("naruto")) == 720
 
