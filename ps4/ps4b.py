@@ -105,7 +105,12 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        pass #delete this line and replace with your code here
+
+        #generate and concatenate upper and lower case letters of the alphabets
+        upper_case_letters = self.generate_alphabets(lambda x: chr(x))  
+        lower_case_letters =  self.generate_alphabets(lambda x: chr(x).lower())
+        shifted_upper_case = [''] * len(upper_case_letters)
+        shifted_lower_case = [''] * len(lower_case_letters)
 
     def apply_shift(self, shift):
         '''
@@ -120,6 +125,12 @@ class Message(object):
              down the alphabet by the input shift
         '''
         pass #delete this line and replace with your code here
+
+    def generate_alphabets(self, func):
+        '''
+        Generate letters of the alphabets based on the function parameter passed to the argument
+        '''
+        return [func(i) for i in range(65, 91)]
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
@@ -220,6 +231,8 @@ if __name__ == '__main__':
 #    print('Actual Output:', ciphertext.decrypt_message())
 
     #TODO: WRITE YOUR TEST CASES HERE
+    message = Message("hello world")
+    print(message.build_shift_dict(4))
 
     #TODO: best shift value and unencrypted story 
     
