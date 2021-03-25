@@ -135,7 +135,16 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        pass #delete this line and replace with your code here
+        shifted_letters = self.build_shift_dict(shift)
+        shifted_message_text = ''
+
+        for char in self.text:
+            if char in shifted_letters:
+                shifted_message_text += shifted_letters[char]
+            else:
+                shifted_message_text += char
+
+        return shifted_message_text
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
@@ -236,8 +245,8 @@ if __name__ == '__main__':
 #    print('Actual Output:', ciphertext.decrypt_message())
 
     #TODO: WRITE YOUR TEST CASES HERE
-    message = Message("hello world")
-    print(message.build_shift_dict(1))
+    message = Message("hello worlD")
+    print(message.apply_shift(1))
 
     #TODO: best shift value and unencrypted story 
     
