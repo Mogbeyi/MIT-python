@@ -160,9 +160,13 @@ class PlaintextMessage(Message):
             self.shift (integer, determined by input shift)
             self.encryption_dict (dictionary, built using shift)
             self.message_text_encrypted (string, created using shift)
-
         '''
-        pass #delete this line and replace with your code here
+        Message.__init__(self, text)
+        self.text = text
+        self.shift = shift
+        self.encryption_dict = self.build_shift_dict(shift)
+        self.message_text_encrypted = self.apply_shift(shift)
+    
 
     def get_shift(self):
         '''
@@ -170,7 +174,7 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
+        return self.shift
 
     def get_encryption_dict(self):
         '''
@@ -178,7 +182,7 @@ class PlaintextMessage(Message):
         
         Returns: a COPY of self.encryption_dict
         '''
-        pass #delete this line and replace with your code here
+        return self.encryption_dict
 
     def get_message_text_encrypted(self):
         '''
@@ -186,7 +190,7 @@ class PlaintextMessage(Message):
         
         Returns: self.message_text_encrypted
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text_encrypted
 
     def change_shift(self, shift):
         '''
@@ -198,7 +202,10 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        if shift < 0 or shift > 26:
+            print("Shift must be greater than 0 and less than 26")
+        else:
+            self.shift = shift
 
 
 class CiphertextMessage(Message):
@@ -245,8 +252,9 @@ if __name__ == '__main__':
 #    print('Actual Output:', ciphertext.decrypt_message())
 
     #TODO: WRITE YOUR TEST CASES HERE
-    message = Message("hello worlD")
-    print(message.apply_shift(1))
+    message = PlaintextMessage("hello worlD", 2)
+    message.change_shift(26)
+    print(message.get_shift())
 
     #TODO: best shift value and unencrypted story 
     
