@@ -105,19 +105,30 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        upper_case_letters = string.ascii_uppercase 
+        lower_case_letters = string.ascii_lowercase
+        shifted_upper_case = self.form_shifted_letters(upper_case_letters, shift) 
+        shifted_lower_case = self.form_shifted_letters(lower_case_letters, shift) 
 
-        #generate and concatenate upper and lower case letters of the alphabets
-        upper_case_letters = self.generate_alphabets(lambda x: chr(x))  
-        lower_case_letters =  self.generate_alphabets(lambda x: chr(x).lower())
-        shifted_upper_case = [''] * len(upper_case_letters)
-        shifted_lower_case = [''] * len(lower_case_letters)
+        return self.convert_two_arrays_to_dic(upper_case_letters + lower_case_letters, shifted_upper_case + shifted_lower_case)
+
+    def form_shifted_letters(self, letters, shift):
+        letters_array = [''] * len(letters)
+
+        for i in range(len(letters)):
+            letters_array[i] = letters[(i + shift) % 26]
+
+        return letters_array
+
+    def convert_two_arrays_to_dic(self, first_array, second_array):
+        return {first_array[i]: second_array[i] for i in range(len(first_array))}
 
     def apply_shift(self, shift):
         '''
         Applies the Caesar Cipher to self.message_text with the input shift.
         Creates a new string that is self.message_text shifted down the
         alphabet by some number of characters determined by the input shift        
-        
+
         shift (integer): the shift with which to encrypt the message.
         0 <= shift < 26
 
@@ -125,12 +136,6 @@ class Message(object):
              down the alphabet by the input shift
         '''
         pass #delete this line and replace with your code here
-
-    def generate_alphabets(self, func):
-        '''
-        Generate letters of the alphabets based on the function parameter passed to the argument
-        '''
-        return [func(i) for i in range(65, 91)]
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
@@ -232,7 +237,7 @@ if __name__ == '__main__':
 
     #TODO: WRITE YOUR TEST CASES HERE
     message = Message("hello world")
-    print(message.build_shift_dict(4))
+    print(message.build_shift_dict(1))
 
     #TODO: best shift value and unencrypted story 
     
