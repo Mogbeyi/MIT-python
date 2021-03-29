@@ -307,12 +307,9 @@ if __name__ == "__main__":
     #    print('Actual Output:', ciphertext.decrypt_message())
 
     # TODO: WRITE YOUR TEST CASES HERE
-    message = Message("hello world")
-    encrypted_message = message.apply_shift(2)
-    print(encrypted_message)
-    cipher = CiphertextMessage(encrypted_message)
+    story = get_story_string()
+    cipher = CiphertextMessage(story)
     decrypted_message = cipher.decrypt_message()
-    print(cipher.get_max_shift_value())
     print(decrypted_message)
 
     # TODO: best shift value and unencrypted story
