@@ -4,6 +4,7 @@
 # Time Spent: x:xx
 
 import string
+import pprint
 
 ### HELPER CODE ###
 def load_words(file_name):
@@ -229,6 +230,48 @@ class CiphertextMessage(Message):
         self.text = text
         Message.__init__(self, text)
 
+    def get_shift_freq(self):
+        ''' 
+        Gets the frequency of all shift key values.
+        Returns a dictionary with the shift as the key
+        and an array with the first element as the word count
+        of each key and the sentence as the second element of the array
+        '''
+        shift_freq = {}
+
+        for i in range(26):
+            count = 0
+            sentence = self.apply_shift(26 - i)
+            words_of_sentence = sentence.split()
+
+            for word in words_of_sentence:
+                if is_word(self.valid_words, word):
+                    count += 1
+            shift_freq[i] = [count, sentence]
+
+        return shift_freq
+
+    def get_max_shift_value(self):
+        '''
+        Get maximum count value from frequency result
+        '''
+        values = self.get_shift_freq().values()
+        return max([elem[0] for elem in values])
+
+    def get_result(self, elem):
+        '''
+        Returns a tupple containing the shift with the maximum words and the 
+        corresponding decrypted message
+        '''
+        result = ()
+        shift_freq = self.get_shift_freq()
+
+        for key, value in shift_freq.items():
+            if value[0] == elem:
+                result += (key, value[1])
+        
+        return result
+
     def decrypt_message(self):
         """
         Decrypt self.message_text by trying every possible shift value
@@ -245,7 +288,10 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         """
-        pass  # delete this line and replace with your code here
+
+        max_value = self.get_max_shift_value()
+
+        return self.get_result(max_value)
 
 
 if __name__ == "__main__":
@@ -261,8 +307,13 @@ if __name__ == "__main__":
     #    print('Actual Output:', ciphertext.decrypt_message())
 
     # TODO: WRITE YOUR TEST CASES HERE
-    message = CiphertextMessage("hello worlD")
-    print(message.text)
+    message = Message("hello world")
+    encrypted_message = message.apply_shift(2)
+    print(encrypted_message)
+    cipher = CiphertextMessage(encrypted_message)
+    decrypted_message = cipher.decrypt_message()
+    print(cipher.get_max_shift_value())
+    print(decrypted_message)
 
     # TODO: best shift value and unencrypted story
 
