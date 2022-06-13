@@ -180,6 +180,7 @@ class PlaintextMessage(Message):
         """
         Used to safely access self.shift outside of the class
 
+
         Returns: self.shift
         """
         return self.shift
